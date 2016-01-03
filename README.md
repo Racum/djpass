@@ -1,5 +1,7 @@
 # djpass (Djando Passwords)
 
+[![Build Status](https://travis-ci.org/Racum/djpass.svg?branch=master)](https://travis-ci.org/Racum/djpass)
+
 A command-line tool to generate and verify passwords used in [Django Project](https://www.djangoproject.com).
 
 ## Installation

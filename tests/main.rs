@@ -87,7 +87,7 @@ fn test_bad_hash() {
 fn test_version() {
     let command = Command::new("target/debug/djpass").arg("hello").arg("-v").output().unwrap();
     let output = String::from_utf8_lossy(&command.stdout);
-    assert!(output.starts_with("djpass 0.1.0, generates hashes for Django 1.9"));
+    assert!(output.starts_with("djpass "));
 }
 
 #[test]

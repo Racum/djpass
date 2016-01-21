@@ -11,7 +11,7 @@ use ansi_term::Colour::{Green, Red, Yellow};
 use djangohashers::*;
 
 
-static VERSION: &'static str = "0.1.0";
+static VERSION: &'static str = env!("CARGO_PKG_VERSION");
 static DJANGO_VERSION: &'static str = "1.9";
 static HELP_TEXT: &'static str = "Generates or validates password hashes used in Django Project.
 

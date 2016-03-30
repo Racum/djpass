@@ -78,7 +78,7 @@ fn main() {
         let mut stdout = stdout();
         print!("Password: ");
         stdout.flush().unwrap();
-        let input = rpassword::read_password().unwrap();
+        let input = read_password().unwrap();
         if input == "" {
             println!("{}", Red.paint("Empty password."));
         } else {
@@ -102,6 +102,7 @@ fn main() {
             "md5" => make_password_with_algorithm(&password, Algorithm::MD5),
             "unsaltedsha1" => make_password_with_algorithm(&password, Algorithm::UnsaltedSHA1),
             "unsaltedmd5" => make_password_with_algorithm(&password, Algorithm::UnsaltedMD5),
+            "crypt" => make_password_with_algorithm(&password, Algorithm::Crypt),
             _ => "".to_string(),
         };
         if encoded == "" {

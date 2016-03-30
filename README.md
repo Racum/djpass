@@ -48,6 +48,7 @@ Algorithms:
 - `MD5`
 - `UnsaltedSHA1`
 - `UnsaltedMD5`
+- `Crypt`
 
 The algorithm argument is case-insensitive.
 

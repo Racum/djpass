@@ -1,4 +1,4 @@
-# djpass (Djando Passwords)
+# djpass (Django Passwords)
 
 [![Build Status](https://travis-ci.org/Racum/djpass.svg?branch=master)](https://travis-ci.org/Racum/djpass)
 
@@ -16,7 +16,7 @@ $ cargo install djpass
 
 ### Generating a Password Hash
 
-If you run without arguments a password will be asked:
+If you run it without arguments it will ask for a password:
 
 ```
 $ djpass
@@ -64,9 +64,9 @@ If you pass an algorithm during verification it will be ignored.
 
 ## Contributing
 
-* Be polite, I’m new to Rust, like almost everybody.
+* Be polite, I'm new to Rust, like almost everybody.
 * Don't go nuts with your *mad-rust-skillz*, legibility is a priority.
-* Always include some test case.
+* Always include a unit test.
 
 ## License
 

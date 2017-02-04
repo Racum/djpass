@@ -96,3 +96,15 @@ fn test_help() {
     let output = String::from_utf8_lossy(&command.stdout);
     assert!(output.starts_with("Generates or validates password hashes used in Django Project."));
 }
+
+#[test]
+fn test_argon2_algorithm() {
+    let command = Command::new("target/debug/djpass")
+                      .arg("hello")
+                      .arg("-a")
+                      .arg("argon2")
+                      .output()
+                      .unwrap();
+    let output = String::from_utf8_lossy(&command.stdout);
+    assert!(output.starts_with("\u{1b}[32mHash:[0m argon2$argon2i$"));
+}

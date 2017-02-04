@@ -1,15 +1,16 @@
 [package]
 name = "djpass"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Ronaldo Racum <ronaldo@racum.com>"]
 license = "BSD-3-Clause"
 readme = "README.md"
 repository = "https://github.com/racum/djpass"
 keywords = ["hash", "password", "python", "django", "crypto"]
+categories = ["algorithms", "authentication", "cryptography", "command-line-interface"]
 description = "A command-line tool to generate and verify passwords used in Django project."
 
 [dependencies]
 argparse = "^0.2"
-rpassword = "^0.2"
-ansi_term = "^0.7"
+rpassword = "^0.3"
+ansi_term = "^0.9"
 djangohashers = "^0.2"

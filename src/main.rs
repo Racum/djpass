@@ -33,6 +33,7 @@ Usage:
 Algorithms:
 - PBKDF2 (default)
 - PBKDF2SHA1
+- Argon2
 - BCryptSHA256
 - BCrypt
 - SHA1
@@ -96,6 +97,7 @@ fn main() {
         let encoded = match algorithm.to_lowercase().as_ref() {
             "pbkdf2" => make_password_with_algorithm(&password, Algorithm::PBKDF2),
             "pbkdf2sha1" => make_password_with_algorithm(&password, Algorithm::PBKDF2SHA1),
+            "argon2" => make_password_with_algorithm(&password, Algorithm::Argon2),
             "bcryptsha256" => make_password_with_algorithm(&password, Algorithm::BCryptSHA256),
             "bcrypt" => make_password_with_algorithm(&password, Algorithm::BCrypt),
             "sha1" => make_password_with_algorithm(&password, Algorithm::SHA1),

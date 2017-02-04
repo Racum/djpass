@@ -42,6 +42,7 @@ Algorithms:
 
 - `PBKDF2` (default)
 - `PBKDF2SHA1`
+- `Argon2`
 - `BCryptSHA256`
 - `BCrypt`
 - `SHA1`

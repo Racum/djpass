@@ -12,7 +12,7 @@ use djangohashers::*;
 
 
 static VERSION: &'static str = env!("CARGO_PKG_VERSION");
-static DJANGO_VERSION: &'static str = "1.11";
+static DJANGO_VERSION: &'static str = "2.1";
 static HELP_TEXT: &'static str = "Generates or validates password hashes used in Django Project.
 
 Usage:

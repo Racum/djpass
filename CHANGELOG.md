@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.0] - 2021-12-08
+
+### Added
+
+- Scrypt support.
+
 ## [1.1.0] - 2020-06-20
 
 ### Changed

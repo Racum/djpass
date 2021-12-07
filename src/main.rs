@@ -34,6 +34,7 @@ Algorithms:
 - PBKDF2 (default)
 - PBKDF2SHA1
 - Argon2
+- Scrypt
 - BCryptSHA256
 - BCrypt
 - SHA1
@@ -98,6 +99,7 @@ fn main() {
             "pbkdf2" => make_password_with_algorithm(&password, Algorithm::PBKDF2),
             "pbkdf2sha1" => make_password_with_algorithm(&password, Algorithm::PBKDF2SHA1),
             "argon2" => make_password_with_algorithm(&password, Algorithm::Argon2),
+            "scrypt" => make_password_with_algorithm(&password, Algorithm::Scrypt),
             "bcryptsha256" => make_password_with_algorithm(&password, Algorithm::BCryptSHA256),
             "bcrypt" => make_password_with_algorithm(&password, Algorithm::BCrypt),
             "sha1" => make_password_with_algorithm(&password, Algorithm::SHA1),

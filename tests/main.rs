@@ -108,3 +108,15 @@ fn test_argon2_algorithm() {
     let output = String::from_utf8_lossy(&command.stdout);
     assert!(output.starts_with("\u{1b}[32mHash:[0m argon2$argon2i$"));
 }
+
+#[test]
+fn test_scrypt_algorithm() {
+    let command = Command::new("target/debug/djpass")
+                      .arg("hello")
+                      .arg("-a")
+                      .arg("scrypt")
+                      .output()
+                      .unwrap();
+    let output = String::from_utf8_lossy(&command.stdout);
+    assert!(output.starts_with("\u{1b}[32mHash:[0m scrypt$"));
+}

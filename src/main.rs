@@ -1,18 +1,17 @@
-extern crate argparse;
-extern crate rpassword;
 extern crate ansi_term;
+extern crate argparse;
 extern crate djangohashers;
+extern crate rpassword;
 
-use std::process;
-use std::io::{stdout, Write};
-use argparse::{ArgumentParser, Store, StoreTrue};
-use rpassword::read_password;
 use ansi_term::Colour::{Green, Red, Yellow};
+use argparse::{ArgumentParser, Store, StoreTrue};
 use djangohashers::*;
-
+use rpassword::read_password;
+use std::io::{stdout, Write};
+use std::process;
 
 static VERSION: &'static str = env!("CARGO_PKG_VERSION");
-static DJANGO_VERSION: &'static str = "4.0";
+static DJANGO_VERSION: &'static str = "4.1";
 static HELP_TEXT: &'static str = "Generates or validates password hashes used in Django Project.
 
 Usage:
@@ -48,7 +47,6 @@ Optional arguments:
 ";
 
 fn main() {
-
     // Arguments:
     let mut help = false;
     let mut version = false;
@@ -60,8 +58,10 @@ fn main() {
         ap.refer(&mut password).add_argument("password", Store, "");
         ap.refer(&mut algorithm).add_option(&["-a"], Store, "");
         ap.refer(&mut hash).add_argument("hash", Store, "");
-        ap.refer(&mut help).add_option(&["-h", "--help"], StoreTrue, "");  // I prefer my own help.
-        ap.refer(&mut version).add_option(&["-v", "--version"], StoreTrue, "");
+        ap.refer(&mut help)
+            .add_option(&["-h", "--help"], StoreTrue, ""); // I prefer my own help.
+        ap.refer(&mut version)
+            .add_option(&["-v", "--version"], StoreTrue, "");
         ap.parse_args_or_exit();
     }
 
@@ -71,7 +71,10 @@ fn main() {
     }
 
     if version {
-        println!("djpass {}, generates hashes for Django {}", VERSION, DJANGO_VERSION);
+        println!(
+            "djpass {}, generates hashes for Django {}",
+            VERSION, DJANGO_VERSION
+        );
         process::exit(0);
     }
 
@@ -124,7 +127,6 @@ fn main() {
         if is_password_usable(&hash) {
             if check_password_tolerant(&password, &hash) {
                 println!("{}", Green.paint("Password ok."));
-
             } else {
                 println!("{}", Red.paint("Password does not match hash."));
             }
@@ -132,5 +134,4 @@ fn main() {
             println!("{}", Red.paint("Hash is not properly formatted."));
         }
     }
-
 }

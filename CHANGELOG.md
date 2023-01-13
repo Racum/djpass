@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0] - 2023-01-13
+
+### Changed
+
+- Default Django version set to 4.1.
+- Updated dependencies.
+
 ## [1.2.1] - 2021-12-08
 
 ### Changed

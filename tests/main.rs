@@ -1,6 +1,5 @@
 use std::process::Command;
 
-
 #[test]
 fn test_single_no_arguments() {
     let command = Command::new("target/debug/djpass").output().unwrap();
@@ -10,7 +9,10 @@ fn test_single_no_arguments() {
 
 #[test]
 fn test_single_password_argument() {
-    let command = Command::new("target/debug/djpass").arg("hello").output().unwrap();
+    let command = Command::new("target/debug/djpass")
+        .arg("hello")
+        .output()
+        .unwrap();
     let output = String::from_utf8_lossy(&command.stdout);
     assert!(output.starts_with("\u{1b}[32mHash:[0m pbkdf2_sha256$"));
 }
@@ -18,11 +20,11 @@ fn test_single_password_argument() {
 #[test]
 fn test_password_and_algorithm_arguments() {
     let command = Command::new("target/debug/djpass")
-                      .arg("hello")
-                      .arg("-a")
-                      .arg("sha1")
-                      .output()
-                      .unwrap();
+        .arg("hello")
+        .arg("-a")
+        .arg("sha1")
+        .output()
+        .unwrap();
     let output = String::from_utf8_lossy(&command.stdout);
     assert!(output.starts_with("\u{1b}[32mHash:[0m sha1$"));
 }
@@ -30,10 +32,10 @@ fn test_password_and_algorithm_arguments() {
 #[test]
 fn test_good_password_and_hash_arguments() {
     let command = Command::new("target/debug/djpass")
-                      .arg("hello")
-                      .arg("sha1$hzPiRIKYykm8$231fe9a64fe025a2b0c89efb132d518502c6fac9")
-                      .output()
-                      .unwrap();
+        .arg("hello")
+        .arg("sha1$hzPiRIKYykm8$231fe9a64fe025a2b0c89efb132d518502c6fac9")
+        .output()
+        .unwrap();
     let output = String::from_utf8_lossy(&command.stdout);
     assert!(output.starts_with("\u{1b}[32mPassword ok."));
 }
@@ -41,10 +43,10 @@ fn test_good_password_and_hash_arguments() {
 #[test]
 fn test_bad_password_and_hash_arguments() {
     let command = Command::new("target/debug/djpass")
-                      .arg("helloz")
-                      .arg("sha1$hzPiRIKYykm8$231fe9a64fe025a2b0c89efb132d518502c6fac9")
-                      .output()
-                      .unwrap();
+        .arg("helloz")
+        .arg("sha1$hzPiRIKYykm8$231fe9a64fe025a2b0c89efb132d518502c6fac9")
+        .output()
+        .unwrap();
     let output = String::from_utf8_lossy(&command.stdout);
     assert!(output.starts_with("\u{1b}[31mPassword does not match hash."));
 }
@@ -52,12 +54,12 @@ fn test_bad_password_and_hash_arguments() {
 #[test]
 fn test_ignore_algoritm_when_verifying() {
     let command = Command::new("target/debug/djpass")
-                      .arg("hello")
-                      .arg("-a")
-                      .arg("sha1")
-                      .arg("sha1$hzPiRIKYykm8$231fe9a64fe025a2b0c89efb132d518502c6fac9")
-                      .output()
-                      .unwrap();
+        .arg("hello")
+        .arg("-a")
+        .arg("sha1")
+        .arg("sha1$hzPiRIKYykm8$231fe9a64fe025a2b0c89efb132d518502c6fac9")
+        .output()
+        .unwrap();
     let output = String::from_utf8_lossy(&command.stdout);
     println!("{}", output);
     assert!(output.starts_with("\u{1b}[33mAlgorithm ignored for verification."));
@@ -66,11 +68,11 @@ fn test_ignore_algoritm_when_verifying() {
 #[test]
 fn test_bad_algorithm() {
     let command = Command::new("target/debug/djpass")
-                      .arg("hello")
-                      .arg("-a")
-                      .arg("bad")
-                      .output()
-                      .unwrap();
+        .arg("hello")
+        .arg("-a")
+        .arg("bad")
+        .output()
+        .unwrap();
     let output = String::from_utf8_lossy(&command.stdout);
     println!("{}", output);
     assert!(output.starts_with("\u{1b}[31mAlgorithm not supported."));
@@ -78,21 +80,33 @@ fn test_bad_algorithm() {
 
 #[test]
 fn test_bad_hash() {
-    let command = Command::new("target/debug/djpass").arg("hello").arg("blah").output().unwrap();
+    let command = Command::new("target/debug/djpass")
+        .arg("hello")
+        .arg("blah")
+        .output()
+        .unwrap();
     let output = String::from_utf8_lossy(&command.stdout);
     assert!(output.starts_with("\u{1b}[31mHash is not properly formatted."));
 }
 
 #[test]
 fn test_version() {
-    let command = Command::new("target/debug/djpass").arg("hello").arg("-v").output().unwrap();
+    let command = Command::new("target/debug/djpass")
+        .arg("hello")
+        .arg("-v")
+        .output()
+        .unwrap();
     let output = String::from_utf8_lossy(&command.stdout);
     assert!(output.starts_with("djpass "));
 }
 
 #[test]
 fn test_help() {
-    let command = Command::new("target/debug/djpass").arg("hello").arg("-h").output().unwrap();
+    let command = Command::new("target/debug/djpass")
+        .arg("hello")
+        .arg("-h")
+        .output()
+        .unwrap();
     let output = String::from_utf8_lossy(&command.stdout);
     assert!(output.starts_with("Generates or validates password hashes used in Django Project."));
 }
@@ -100,23 +114,23 @@ fn test_help() {
 #[test]
 fn test_argon2_algorithm() {
     let command = Command::new("target/debug/djpass")
-                      .arg("hello")
-                      .arg("-a")
-                      .arg("argon2")
-                      .output()
-                      .unwrap();
+        .arg("hello")
+        .arg("-a")
+        .arg("argon2")
+        .output()
+        .unwrap();
     let output = String::from_utf8_lossy(&command.stdout);
-    assert!(output.starts_with("\u{1b}[32mHash:[0m argon2$argon2i$"));
+    assert!(output.starts_with("\u{1b}[32mHash:[0m argon2$argon2id$"));
 }
 
 #[test]
 fn test_scrypt_algorithm() {
     let command = Command::new("target/debug/djpass")
-                      .arg("hello")
-                      .arg("-a")
-                      .arg("scrypt")
-                      .output()
-                      .unwrap();
+        .arg("hello")
+        .arg("-a")
+        .arg("scrypt")
+        .output()
+        .unwrap();
     let output = String::from_utf8_lossy(&command.stdout);
     assert!(output.starts_with("\u{1b}[32mHash:[0m scrypt$"));
 }

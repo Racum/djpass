@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.1] - 2025-01-05
+
+### Changed
+
+- Updated dependencies.
+- Fix cargo-audit issue.
+- Refactor main.
+
 ## [1.4.0] - 2023-10-03
 
 ### Changed

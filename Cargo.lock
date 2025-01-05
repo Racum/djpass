@@ -239,7 +239,7 @@ dependencies = [
 
 [[package]]
 name = "djpass"
-version = "1.4.9"
+version = "1.4.1"
 dependencies = [
  "argparse",
  "colored",

@@ -1,6 +1,6 @@
 [package]
 name = "djpass"
-version = "1.4.0"
+version = "1.4.9"
 authors = ["Ronaldo Racum <ronaldo@racum.com>"]
 license = "BSD-3-Clause"
 readme = "README.md"
@@ -10,6 +10,13 @@ categories = ["algorithms", "authentication", "cryptography", "command-line-inte
 description = "A command-line tool to generate and verify passwords used in Django project."
 edition = "2021"
 
+[profile.release]
+strip = true
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+
 [profile.dev.package."*"]
 opt-level = 1
 
@@ -17,4 +24,4 @@ opt-level = 1
 djangohashers = "^1.7"
 argparse = "^0.2"
 rpassword = "^7.2"
-ansi_term = "^0.12"
+colored = "2.2.0"

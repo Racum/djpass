@@ -10,6 +10,7 @@ fn test_single_no_arguments() {
 #[test]
 fn test_single_password_argument() {
     let command = Command::new("target/debug/djpass")
+        .env("CLICOLOR_FORCE", "true")
         .arg("hello")
         .output()
         .unwrap();
@@ -20,6 +21,7 @@ fn test_single_password_argument() {
 #[test]
 fn test_password_and_algorithm_arguments() {
     let command = Command::new("target/debug/djpass")
+        .env("CLICOLOR_FORCE", "true")
         .arg("hello")
         .arg("-a")
         .arg("sha1")
@@ -32,6 +34,7 @@ fn test_password_and_algorithm_arguments() {
 #[test]
 fn test_good_password_and_hash_arguments() {
     let command = Command::new("target/debug/djpass")
+        .env("CLICOLOR_FORCE", "true")
         .arg("hello")
         .arg("sha1$hzPiRIKYykm8$231fe9a64fe025a2b0c89efb132d518502c6fac9")
         .output()
@@ -43,6 +46,7 @@ fn test_good_password_and_hash_arguments() {
 #[test]
 fn test_bad_password_and_hash_arguments() {
     let command = Command::new("target/debug/djpass")
+        .env("CLICOLOR_FORCE", "true")
         .arg("helloz")
         .arg("sha1$hzPiRIKYykm8$231fe9a64fe025a2b0c89efb132d518502c6fac9")
         .output()
@@ -54,6 +58,7 @@ fn test_bad_password_and_hash_arguments() {
 #[test]
 fn test_ignore_algoritm_when_verifying() {
     let command = Command::new("target/debug/djpass")
+        .env("CLICOLOR_FORCE", "true")
         .arg("hello")
         .arg("-a")
         .arg("sha1")
@@ -68,6 +73,7 @@ fn test_ignore_algoritm_when_verifying() {
 #[test]
 fn test_bad_algorithm() {
     let command = Command::new("target/debug/djpass")
+        .env("CLICOLOR_FORCE", "true")
         .arg("hello")
         .arg("-a")
         .arg("bad")
@@ -81,6 +87,7 @@ fn test_bad_algorithm() {
 #[test]
 fn test_bad_hash() {
     let command = Command::new("target/debug/djpass")
+        .env("CLICOLOR_FORCE", "true")
         .arg("hello")
         .arg("blah")
         .output()
@@ -92,6 +99,7 @@ fn test_bad_hash() {
 #[test]
 fn test_version() {
     let command = Command::new("target/debug/djpass")
+        .env("CLICOLOR_FORCE", "true")
         .arg("hello")
         .arg("-v")
         .output()
@@ -103,6 +111,7 @@ fn test_version() {
 #[test]
 fn test_help() {
     let command = Command::new("target/debug/djpass")
+        .env("CLICOLOR_FORCE", "true")
         .arg("hello")
         .arg("-h")
         .output()
@@ -114,6 +123,7 @@ fn test_help() {
 #[test]
 fn test_argon2_algorithm() {
     let command = Command::new("target/debug/djpass")
+        .env("CLICOLOR_FORCE", "true")
         .arg("hello")
         .arg("-a")
         .arg("argon2")
@@ -126,6 +136,7 @@ fn test_argon2_algorithm() {
 #[test]
 fn test_scrypt_algorithm() {
     let command = Command::new("target/debug/djpass")
+        .env("CLICOLOR_FORCE", "true")
         .arg("hello")
         .arg("-a")
         .arg("scrypt")

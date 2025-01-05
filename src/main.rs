@@ -1,18 +1,13 @@
-extern crate ansi_term;
-extern crate argparse;
-extern crate djangohashers;
-extern crate rpassword;
-
-use ansi_term::Colour::{Green, Red, Yellow};
 use argparse::{ArgumentParser, Store, StoreTrue};
+use colored::*;
 use djangohashers::*;
 use rpassword::read_password;
 use std::io::{stdout, Write};
 use std::process;
 
-static VERSION: &'static str = env!("CARGO_PKG_VERSION");
-static DJANGO_VERSION: &'static str = "4.1";
-static HELP_TEXT: &'static str = "Generates or validates password hashes used in Django Project.
+static VERSION: &str = env!("CARGO_PKG_VERSION");
+static DJANGO_VERSION: &str = "4.1";
+static HELP_TEXT: &str = "Generates or validates password hashes used in Django Project.
 
 Usage:
 
@@ -58,10 +53,8 @@ fn main() {
         ap.refer(&mut password).add_argument("password", Store, "");
         ap.refer(&mut algorithm).add_option(&["-a"], Store, "");
         ap.refer(&mut hash).add_argument("hash", Store, "");
-        ap.refer(&mut help)
-            .add_option(&["-h", "--help"], StoreTrue, ""); // I prefer my own help.
-        ap.refer(&mut version)
-            .add_option(&["-v", "--version"], StoreTrue, "");
+        ap.refer(&mut help).add_option(&["-h", "--help"], StoreTrue, ""); // I prefer my own help.
+        ap.refer(&mut version).add_option(&["-v", "--version"], StoreTrue, "");
         ap.parse_args_or_exit();
     }
 
@@ -71,67 +64,64 @@ fn main() {
     }
 
     if version {
-        println!(
-            "djpass {}, generates hashes for Django {}",
-            VERSION, DJANGO_VERSION
-        );
+        println!("djpass {}, generates hashes for Django {}", VERSION, DJANGO_VERSION);
         process::exit(0);
     }
 
-    // No arguments, promts for password, generates hash with default algorithm:
-    if password == "" && algorithm == "" && hash == "" {
-        let mut stdout = stdout();
-        print!("Password: ");
-        stdout.flush().unwrap();
-        let input = read_password().unwrap();
-        if input == "" {
-            println!("{}", Red.paint("Empty password."));
-        } else {
-            println!("{} {}", Green.paint("Hash:"), make_password(&input));
-        }
-    }
-
-    // Password argument present, generates hash with default algorithm:
-    if password != "" && algorithm == "" && hash == "" {
-        println!("{} {}", Green.paint("Hash:"), make_password(&password));
-    }
-
-    // Password and algorithm arguments present, generates hash with as defined:
-    if password != "" && algorithm != "" && hash == "" {
-        let encoded = match algorithm.to_lowercase().as_ref() {
-            "pbkdf2" => make_password_with_algorithm(&password, Algorithm::PBKDF2),
-            "pbkdf2sha1" => make_password_with_algorithm(&password, Algorithm::PBKDF2SHA1),
-            "argon2" => make_password_with_algorithm(&password, Algorithm::Argon2),
-            "scrypt" => make_password_with_algorithm(&password, Algorithm::Scrypt),
-            "bcryptsha256" => make_password_with_algorithm(&password, Algorithm::BCryptSHA256),
-            "bcrypt" => make_password_with_algorithm(&password, Algorithm::BCrypt),
-            "sha1" => make_password_with_algorithm(&password, Algorithm::SHA1),
-            "md5" => make_password_with_algorithm(&password, Algorithm::MD5),
-            "unsaltedsha1" => make_password_with_algorithm(&password, Algorithm::UnsaltedSHA1),
-            "unsaltedmd5" => make_password_with_algorithm(&password, Algorithm::UnsaltedMD5),
-            "crypt" => make_password_with_algorithm(&password, Algorithm::Crypt),
-            _ => "".to_string(),
-        };
-        if encoded == "" {
-            println!("{}", Red.paint("Algorithm not supported."));
-        } else {
-            println!("{} {}", Green.paint("Hash:"), encoded);
-        }
-    }
-
-    // Password and hash arguments present, verifies the pair:
-    if password != "" && hash != "" {
-        if algorithm != "" {
-            println!("{}", Yellow.paint("Algorithm ignored for verification."));
-        }
-        if is_password_usable(&hash) {
-            if check_password_tolerant(&password, &hash) {
-                println!("{}", Green.paint("Password ok."));
+    match (!password.is_empty(), !algorithm.is_empty(), !hash.is_empty()) {
+        (false, false, false) => {
+            // No arguments, promts for password, generates hash with default algorithm:
+            let mut stdout = stdout();
+            print!("Password: ");
+            stdout.flush().unwrap();
+            let input = read_password().unwrap();
+            if input.is_empty() {
+                println!("{}", "Empty password.".red());
             } else {
-                println!("{}", Red.paint("Password does not match hash."));
+                println!("{} {}", "Hash:".green(), make_password(&input));
             }
-        } else {
-            println!("{}", Red.paint("Hash is not properly formatted."));
         }
+        (true, false, false) => {
+            // Password argument present, generates hash with default algorithm:
+            println!("{} {}", "Hash:".green(), make_password(&password));
+        }
+        (true, true, false) => {
+            // Password and algorithm arguments present, generates hash with as defined:
+            let encoded = match algorithm.to_lowercase().as_ref() {
+                "pbkdf2" => make_password_with_algorithm(&password, Algorithm::PBKDF2),
+                "pbkdf2sha1" => make_password_with_algorithm(&password, Algorithm::PBKDF2SHA1),
+                "argon2" => make_password_with_algorithm(&password, Algorithm::Argon2),
+                "scrypt" => make_password_with_algorithm(&password, Algorithm::Scrypt),
+                "bcryptsha256" => make_password_with_algorithm(&password, Algorithm::BCryptSHA256),
+                "bcrypt" => make_password_with_algorithm(&password, Algorithm::BCrypt),
+                "sha1" => make_password_with_algorithm(&password, Algorithm::SHA1),
+                "md5" => make_password_with_algorithm(&password, Algorithm::MD5),
+                "unsaltedsha1" => make_password_with_algorithm(&password, Algorithm::UnsaltedSHA1),
+                "unsaltedmd5" => make_password_with_algorithm(&password, Algorithm::UnsaltedMD5),
+                "crypt" => make_password_with_algorithm(&password, Algorithm::Crypt),
+                _ => "".to_string(),
+            };
+            if encoded.is_empty() {
+                println!("{}", "Algorithm not supported.".red());
+            } else {
+                println!("{} {}", "Hash:".green(), encoded);
+            }
+        }
+        (true, _, true) => {
+            // Password and hash arguments present, verifies the pair:
+            if !algorithm.is_empty() {
+                println!("{}", "Algorithm ignored for verification.".yellow());
+            }
+            if is_password_usable(&hash) {
+                if check_password_tolerant(&password, &hash) {
+                    println!("{}", "Password ok.".green());
+                } else {
+                    println!("{}", "Password does not match hash.".red());
+                }
+            } else {
+                println!("{}", "Hash is not properly formatted.".red());
+            }
+        }
+        (_, _, _) => unreachable!(),
     }
 }

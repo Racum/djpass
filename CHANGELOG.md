@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.5.0] - 2025-04-05
+
+### Changed
+
+- Default Django version set to 5.2.
+- Updated dependencies.
+- Migrated to Rust Edition 2024.
+
 ## [1.4.1] - 2025-01-05
 
 ### Changed

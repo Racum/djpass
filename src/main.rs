@@ -2,7 +2,7 @@ use argparse::{ArgumentParser, Store, StoreTrue};
 use colored::*;
 use djangohashers::*;
 use rpassword::read_password;
-use std::io::{stdout, Write};
+use std::io::{Write, stdout};
 use std::process;
 
 static VERSION: &str = env!("CARGO_PKG_VERSION");

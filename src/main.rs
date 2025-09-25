@@ -6,7 +6,7 @@ use std::io::{Write, stdout};
 use std::process;
 
 static VERSION: &str = env!("CARGO_PKG_VERSION");
-static DJANGO_VERSION: &str = "4.1";
+static DJANGO_VERSION: &str = "5.2";
 static HELP_TEXT: &str = "Generates or validates password hashes used in Django Project.
 
 Usage:

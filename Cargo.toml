@@ -1,6 +1,6 @@
 [package]
 name = "djpass"
-version = "1.5.1"
+version = "1.6.0"
 authors = ["Ronaldo Racum <ronaldo@racum.com>"]
 license = "BSD-3-Clause"
 readme = "README.md"
@@ -21,7 +21,7 @@ panic = "abort"
 opt-level = 1
 
 [dependencies]
-djangohashers = "^1.8"
+djangohashers = "^1.9"
 argparse = "^0.2"
-rpassword = "^7.2"
+rpassword = "^7.5"
 colored = "3.0.0"
